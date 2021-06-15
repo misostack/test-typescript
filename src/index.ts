@@ -6,7 +6,7 @@ const debug = (inspected = false, ...theArgs: any[]) => {
     ? console.error(util.inspect(theArgs, true, 5, true))
     : console.error(theArgs);
 };
-const categoryJSON = { name: 'snm123', tags: ['abc'] };
+const categoryJSON = { name: '', tags: [] };
 const category = plainToClass(CreateCategoryDTO, categoryJSON);
 
 debug(false, 'category', category);
@@ -14,7 +14,7 @@ const str = 'hello';
 debug(false, str);
 
 (async () => {
-  const { values, errors } = await validateDTO(category);
-  debug(true, 'categoryDTO:values', values);
+  const { errors, valid } = await validateDTO(category);
+  debug(true, 'categoryDTO:valid', valid);
   debug(true, 'categoryDTO:errors', errors);
 })();

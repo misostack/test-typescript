@@ -30,6 +30,37 @@ const category = plainToClass(CreateCategoryDTO, categoryJSON);
 
 ### Class Validator
 
+```js
+(async () => {
+  const { errors, valid } = await validateDTO(category);
+  debug(true, 'categoryDTO:valid', valid);
+  debug(true, 'categoryDTO:errors', errors);
+})();
+```
+
+**Sample Response for errors after validation**
+
+```json
+  [
+    {
+      code: 'e_common_name_islength',
+      field: 'name',
+      message: 'name must be longer than or equal to 3 characters'
+    },
+    {
+      code: 'e_common_description_isnotempty',
+      field: 'description',
+      message: 'description should not be empty'
+    },
+    {
+      code: 'e_common_status_isin',
+      field: 'status',
+      message: 'status must be one of the following values: active, inactive'
+    },
+    [length]: 3
+  ],
+```
+
 ## Refs
 
 - https://khalilstemmler.com/blogs/typescript/node-starter-project/
@@ -69,4 +100,53 @@ guards
 A => pages
 B => pages
 C => pages
+```
+
+**META Types**
+
+```js
+import {
+  PipeTransform,
+  Injectable,
+  ArgumentMetadata,
+  BadRequestException,
+} from '@nestjs/common';
+import { validate } from 'class-validator';
+import { plainToClass } from 'class-transformer';
+
+const marshalValidationErrors = (errors: any[]) => {
+  return errors.map((prop: { property: string | number; constraints: any }) => {
+    // const newErrorObject = {};
+    // newErrorObject[prop.property] = prop.constraints;
+    // console.error(newErrorObject);
+    return {
+      field: `${prop.property}`,
+      message: `${Object.keys(prop.constraints)[0]}`,
+    };
+    return `${prop.property}#${Object.keys(prop.constraints)[0]}`;
+    // return newErrorObject;
+  });
+};
+
+@Injectable()
+export class ValidationPipe implements PipeTransform<any> {
+  async transform(value: any, { metatype }: ArgumentMetadata) {
+    if (!metatype || !this.toValidate(metatype)) {
+      return value;
+    }
+    const object = plainToClass(metatype, value);
+    // Pass `skipMissingProperties` as part of the custom validation
+    const errors = await validate(object);
+    if (errors.length > 0) {
+      throw new BadRequestException(marshalValidationErrors(errors));
+    }
+    return value;
+  }
+
+  private toValidate(metatype: any): boolean {
+    const types: any[] = [String, Boolean, Number, Array, Object];
+    return !types.includes(metatype);
+  }
+}
+
 ```
