@@ -40,7 +40,7 @@ const category = plainToClass(CreateCategoryDTO, categoryJSON);
 
 **Sample Response for errors after validation**
 
-```json
+```js
   [
     {
       code: 'e_common_name_islength',
