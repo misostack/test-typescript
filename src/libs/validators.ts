@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 // example for validators
 
-import { IsString, Length, validate, ValidatorOptions } from 'class-validator';
+import {
+  IsString,
+  Length,
+  validateOrReject,
+  ValidatorOptions
+} from 'class-validator';
 
 //props: name, parentId
 interface DTO {}
@@ -27,13 +32,13 @@ export const DefaultValidationOptions: ValidatorOptions = {
 };
 
 export const validateDTO = async (
-  input: DTO,
+  values: DTO,
   options: ValidatorOptions = DefaultValidationOptions
 ): Promise<DTOValidates> => {
   try {
-    const values = await validate(input, options);
+    await validateOrReject(values, options);
     return { values, errors: null };
   } catch (errors) {
-    return { values: input, errors };
+    return { values, errors };
   }
 };

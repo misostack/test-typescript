@@ -1,9 +1,17 @@
 import { plainToClass } from 'class-transformer';
-import { CreateCategoryDTO } from './libs';
-
+import { CreateCategoryDTO, validateDTO } from './libs';
+import util from 'util';
+const debug = (...theArgs: any[]) => {
+  console.error(util.inspect(theArgs));
+};
 const categoryJSON = { name: '', tags: [] };
 const category = plainToClass(CreateCategoryDTO, categoryJSON);
 
-console.error('category', category);
+debug('category', category);
 const str = 'hello';
-console.error(str);
+debug(str);
+
+(async () => {
+  const { values, errors } = await validateDTO(category);
+  debug('categoryDTO', values, errors);
+})();
