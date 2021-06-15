@@ -8,7 +8,10 @@ import {
   ValidatorOptions,
   IsNotEmpty,
   IsIn,
-  ValidationError
+  ValidationError,
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  Validate
 } from 'class-validator';
 
 //props: name, parentId
@@ -22,10 +25,17 @@ interface DTOValidates {
   errors: DTOValidateError[];
   valid: boolean;
 }
-// interface ValidationError {
-//   field: string;
-//   message: string;
-// }
+
+// custom validator
+@ValidatorConstraint()
+export class PasswordStrength implements ValidatorConstraintInterface {
+  validate(value: string) {
+    const regex = new RegExp(
+      /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/
+    );
+    return regex.test(value);
+  }
+}
 
 class CategoryDTO implements DTO {
   @IsNotEmpty({})
@@ -43,6 +53,12 @@ class CategoryDTO implements DTO {
   @IsNotEmpty({})
   @IsIn(['active', 'inactive'])
   status?: string;
+
+  @Validate(PasswordStrength, {
+    message:
+      '$property should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long'
+  })
+  password?: string;
 }
 
 export class CreateCategoryDTO extends CategoryDTO {}

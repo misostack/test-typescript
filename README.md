@@ -30,6 +30,15 @@ const category = plainToClass(CreateCategoryDTO, categoryJSON);
 
 ### Class Validator
 
+```md
+#### There are few special tokens you can use in your messages:
+
+1. $value - the value that is being validated
+2. $property - name of the object's property being validated
+3. $target - name of the object's class being validated
+4. $constraint1, $constraint2, ... $constraintN - constraints defined by specific validation type
+```
+
 ```js
 export const validateDTO = async (
   values: DTO,
@@ -44,6 +53,24 @@ export const validateDTO = async (
   debug(true, 'categoryDTO:valid', valid);
   debug(true, 'categoryDTO:errors', errors);
 })();
+
+
+// custom validator
+@ValidatorConstraint()
+export class PasswordStrength implements ValidatorConstraintInterface {
+  validate(value: string) {
+    const regex = new RegExp(
+      /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/
+    );
+    return regex.test(value);
+  }
+}
+
+@Validate(PasswordStrength, {
+  message:
+    '$property should have 1 lowercase letter, 1 uppercase letter, 1 number, and be at least 8 characters long'
+})
+password?: string;
 ```
 
 **Sample Response for errors after validation**
