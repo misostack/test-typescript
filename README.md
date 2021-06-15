@@ -31,8 +31,16 @@ const category = plainToClass(CreateCategoryDTO, categoryJSON);
 ### Class Validator
 
 ```js
+export const validateDTO = async (
+  values: DTO,
+  errorPrefix = '',
+  options: ValidatorOptions = DefaultValidationOptions
+): Promise<DTOValidates> => {...}
+```
+
+```js
 (async () => {
-  const { errors, valid } = await validateDTO(category);
+  const { errors, valid } = await validateDTO(category, 'category', {});
   debug(true, 'categoryDTO:valid', valid);
   debug(true, 'categoryDTO:errors', errors);
 })();
@@ -41,19 +49,19 @@ const category = plainToClass(CreateCategoryDTO, categoryJSON);
 **Sample Response for errors after validation**
 
 ```js
-  [
+ [
     {
-      code: 'e_common_name_islength',
+      code: 'e_category_name_islength',
       field: 'name',
       message: 'name must be longer than or equal to 3 characters'
     },
     {
-      code: 'e_common_description_isnotempty',
+      code: 'e_category_description_isnotempty',
       field: 'description',
       message: 'description should not be empty'
     },
     {
-      code: 'e_common_status_isin',
+      code: 'e_category_status_isin',
       field: 'status',
       message: 'status must be one of the following values: active, inactive'
     },

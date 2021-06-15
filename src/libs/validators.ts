@@ -58,7 +58,7 @@ export const DefaultValidationOptions: ValidatorOptions = {
 
 const marshalValidationErrors = (
   errors: ValidationError[],
-  prefix = 'common'
+  prefix: string
 ): { code: string; field: string; message: string }[] => {
   return errors.map((e) => {
     const { property, constraints } = e;
@@ -78,6 +78,7 @@ const marshalValidationErrors = (
 
 export const validateDTO = async (
   values: DTO,
+  errorPrefix = '',
   options: ValidatorOptions = DefaultValidationOptions
 ): Promise<DTOValidates> => {
   try {
@@ -85,7 +86,13 @@ export const validateDTO = async (
     return { errors: [], valid: true };
   } catch (err: any) {
     if (Array.isArray(err)) {
-      return { errors: marshalValidationErrors(err), valid: false };
+      return {
+        errors: marshalValidationErrors(
+          err,
+          errorPrefix ? errorPrefix : 'common'
+        ),
+        valid: false
+      };
     }
     // else throw server error
     throw new Error(err);

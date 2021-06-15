@@ -14,7 +14,7 @@ const str = 'hello';
 debug(false, str);
 
 (async () => {
-  const { errors, valid } = await validateDTO(category);
+  const { errors, valid } = await validateDTO(category, 'category', {});
   debug(true, 'categoryDTO:valid', valid);
   debug(true, 'categoryDTO:errors', errors);
 })();
