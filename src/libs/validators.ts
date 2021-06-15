@@ -19,8 +19,10 @@ class CategoryDTO implements DTO {
   @Length(3, 60)
   name?: string;
 
-  @IsString()
-  tags?: string;
+  @IsString({
+    each: true
+  })
+  tags?: string[];
 }
 
 export class CreateCategoryDTO extends CategoryDTO {}

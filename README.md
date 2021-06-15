@@ -20,6 +20,14 @@ yarn start
 
 ### Class Transformer
 
+```js
+import { plainToClass } from 'class-transformer';
+import { CreateCategoryDTO, validateDTO } from './libs';
+const categoryJSON = { name: '', tags: [] }; // json object
+// transform to class
+const category = plainToClass(CreateCategoryDTO, categoryJSON);
+```
+
 ### Class Validator
 
 ## Refs
@@ -37,13 +45,6 @@ Kinh nghiem lam viec, diem manh, diem yeu.
 - Em co the chia se ve du an gan nhat em da lam.
 
 Cu the: em co the noi sau hon ve cong nghe, nghiep vu, diem gi kho khan nhat trong du an ma em da doi mat va cach.
-
-Summary
-
-1. 3 years Angular
-2. TMA - 2 projects: Data Gen, IDash
-3. Sutrix : Mobile App ( Angular ) - Nativescript
-4. Ngrx Store, Service
 
 ## Angular Interview questions
 
