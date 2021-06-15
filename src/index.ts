@@ -7,7 +7,3 @@ const category = plainToClass(CreateCategoryDTO, categoryJSON);
 console.error('category', category);
 const str = 'hello';
 console.error(str);
-
-module.exports = () => {
-  console.error('aaa');
-};

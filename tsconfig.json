@@ -5,7 +5,8 @@
     "module": "commonjs",                    
     "lib": ["es6"],                     
     "allowJs": true,
-    "outDir": "build",                          
+    "outDir": "build",      
+    "sourceMap": true,                    
     "rootDir": "src",
     "strict": true,         
     "noImplicitAny": true,
@@ -15,6 +16,9 @@
     "paths": {
       "~/*": ["src/*"],
       "*": ["node_modules/*"]
-    }
-  }
+    },    
+  },
+  "exclude": [
+    "node_modules"
+  ]  
 }

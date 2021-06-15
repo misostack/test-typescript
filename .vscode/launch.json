@@ -6,16 +6,16 @@
   "configurations": [
     {
       "type": "node",
-      "runtimeArgs": ["--experimental-modules"],
       "request": "launch",
       "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
       "program": "${workspaceFolder}/src/index.ts",
-      "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
+      "preLaunchTask": "npm: build",
+      "outFiles": ["${workspaceFolder}/build/**/*.js"],
+      "presentation": {
+        "hidden": false,
+        "group": "",
+        "order": 1
+      }
     }
   ]
 }
