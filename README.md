@@ -185,3 +185,56 @@ export class ValidationPipe implements PipeTransform<any> {
 }
 
 ```
+
+### TypeORM
+
+```bash
+yarn add typeorm pg mysql
+```
+
+**ormconfig.json**
+
+```bash
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "sadmin",
+   "password": "123456",
+   "database": "mycourse",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
+```
+
+### Moment vs DayJS
+
+```js
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
+import moment from 'moment';
+
+const createdAtUTCTime = dayjs
+  .utc()
+  .format(`YYYY-MM-DDTHH:mm:ss.${'S'.repeat(6)}Z`); // '2021-06-16T17:08:55.081081+00:00'
+const updatedAtUTCTime = moment
+  .utc()
+  .format(`YYYY-MM-DDTHH:mm:ss.${'S'.repeat(6)}Z`); // 2021-06-16T17:08:55.084000+00:00'
+
+CURRENT_TIMESTAMPZ IN POSTGRESQL : 2021-06-16 16:29:08.435634+00
+```
