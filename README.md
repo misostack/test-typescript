@@ -17,6 +17,10 @@ yarn start
 
 1. :heavy_check_mark: [class-transformer](https://github.com/typestack/class-transformer)
 2. :heavy_check_mark: [class-validator](https://github.com/typestack/class-validator)
+3. :heavy_check_mark: [typeorm](https://typeorm.io/#/connection-options/sqlite-connection-options)
+4. :heavy_check_mark: [moment](https://momentjs.com/docs/)
+5. :heavy_check_mark: [dayjs](https://day.js.org/docs/en/parse/utc)
+6. :heavy_check_mark: [faker](https://www.npmjs.com/package/faker)
 
 ### Class Transformer
 
